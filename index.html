@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Array - Advanced AI Intelligence System</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #07111f;
+      --bg-soft: #0d1d33;
+      --panel: rgba(11, 22, 39, 0.9);
+      --border: rgba(148, 163, 184, 0.14);
+      --text: #edf5ff;
+      --muted: #b7c9e7;
+      --blue: #60a5fa;
+      --purple: #8b5cf6;
+      --cyan: #7dd3fc;
+      --green: #34d399;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(96, 165, 250, 0.18), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.18), transparent 30%),
+        linear-gradient(135deg, var(--bg), var(--bg-soft));
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .page {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .page.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      background: rgba(7, 17, 31, 0.72);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 78px;
+      gap: 16px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      font-size: 1.2rem;
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .logo-mark {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      color: white;
+      box-shadow: 0 10px 24px rgba(96, 165, 250, 0.4);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    button {
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform 0.18s ease;
+      font-size: 1rem;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      color: white;
+      box-shadow: 0 14px 30px rgba(96, 165, 250, 0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    .btn-large {
+      padding: 16px 24px;
+      font-size: 1.05rem;
+    }
+
+    .btn-full {
+      width: 100%;
+    }
+
+    /* Home Page */
+    .hero {
+      padding: 80px 0 40px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 36px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 18px;
+      color: var(--cyan);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      line-height: 0.98;
+      letter-spacing: -0.07em;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.8;
+      margin-bottom: 28px;
+      max-width: 600px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .stat-card {
+      padding: 18px 12px;
+      border-radius: 16px;
+      background: rgba(15, 31, 52, 0.7);
+      border: 1px solid var(--border);
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+    }
+
+    .stat-card span {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 540px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(20px);
+      opacity: 0.8;
+    }
+
+    .glow-1 {
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(96, 165, 250, 0.9), rgba(96, 165, 250, 0.12) 55%, transparent 70%);
+      left: 36px;
+      top: 40px;
+    }
+
+    .glow-2 {
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.9), rgba(139, 92, 246, 0.12) 55%, transparent 70%);
+      right: 32px;
+      bottom: 26px;
+    }
+
+    .dashboard-card {
+      position: relative;
+      width: min(100%, 520px);
+      padding: 16px;
+      border-radius: 28px;
+      background: rgba(9, 19, 31, 0.82);
+      border: 1px solid var(--border);
+      box-shadow: 0 28px 60px rgba(2, 6, 23, 0.7);
+    }
+
+    .window-bar {
+      display: flex;
+      gap: 10px;
+      padding: 8px 6px 18px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .dot-red { background: #f87171; }
+    .dot-yellow { background: #fbbf24; }
+    .dot-green { background: #34d399; }
+
+    .dashboard-panel {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .panel-head p {
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .panel-head span {
+      display: inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(52, 211, 153, 0.12);
+      color: var(--green);
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .chip {
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(96, 165, 250, 0.08);
+      border: 1px solid rgba(96, 165, 250, 0.2);
+      color: #dfeefb;
+      font-size: 0.75rem;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric-box {
+      padding: 18px 14px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+    }
+
+    .metric-box small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 10px;
+      font-size: 0.8rem;
+    }
+
+    .metric-box strong {
+      font-size: 1.5rem;
+    }
+
+    .section {
+      padding: 84px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(2rem, 3vw, 3rem);
+      letter-spacing: -0.05em;
+    }
+
+    .section-head p {
+      max-width: 580px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .feature-card,
+    .lab-card,
+    .pricing-card {
+      background: rgba(11, 22, 39, 0.82);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 26px 22px;
+      box-shadow: 0 20px 40px rgba(2, 6, 23, 0.28);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 18px;
+    }
+
+    .feature-card h3,
+    .lab-card h3,
+    .pricing-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.38rem;
+    }
+
+    .feature-card p,
+    .lab-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .lab-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .lab-card {
+      padding: 28px 22px;
+    }
+
+    .lab-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0 0;
+      line-height: 2;
+    }
+
+    .lab-card li {
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .lab-card li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-weight: bold;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .pricing-card {
+      position: relative;
+    }
+
+    .pricing-card.featured {
+      border-color: rgba(96, 165, 250, 0.5);
+      transform: translateY(-6px);
+    }
+
+    .badge {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: rgba(96, 165, 250, 0.14);
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: var(--cyan);
+      font-size: 0.68rem;
+      font-weight: 700;
+    }
+
+    .price {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.06em;
+      margin: 18px 0;
+    }
+
+    .price span {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .pricing-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px;
+      line-height: 2;
+    }
+
+    .pricing-card li {
+      color: var(--muted);
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .pricing-card li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--green);
+    }
+
+    .page-header {
+      padding: 70px 0;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      font-size: clamp(2.1rem, 3vw, 3.2rem);
+      line-height: 1.1;
+      letter-spacing: -0.07em;
+      margin-bottom: 12px;
+    }
+
+    .contact-form {
+      max-width: 760px;
+      margin: 0 auto;
+      background: rgba(11, 22, 39, 0.82);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 24px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text);
+      font-family: inherit;
+    }
+
+    .contact-form textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+      margin-top: 28px;
+    }
+
+    .dashboard-item {
+      background: rgba(11, 22, 39, 0.82);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px 22px;
+    }
+
+    .dashboard-item small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+    }
+
+    .dashboard-item strong {
+      font-size: 1.8rem;
+    }
+
+    footer {
+      padding: 30px 0 60px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--text);
+    }
+
+    footer p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid,
+      .feature-grid,
+      .lab-grid,
+      .pricing-grid,
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 52px;
+      }
+
+      .footer-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      button {
+        padding: 12px 16px;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <a class="logo" onclick="showPage('home')">
+          <div class="logo-mark">A</div>
+          <span>ARRAY</span>
+        </a>
+
+        <ul class="nav-links">
+          <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+          <li><a onclick="showPage('features')" id="nav-features">Features</a></li>
+          <li><a onclick="showPage('labs')" id="nav-labs">Labs</a></li>
+          <li><a onclick="showPage('pricing')" id="nav-pricing">Pricing</a></li>
+          <li><a onclick="showPage('dashboard')" id="nav-dashboard">Dashboard</a></li>
+          <li><a onclick="showPage('about')" id="nav-about">About</a></li>
+          <li><a onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <button class="btn-ghost">Sign in</button>
+          <button class="btn-primary">Try Array</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HOME PAGE -->
+  <div id="home" class="page active">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">AI Data System</span>
+          <h1>Think faster. Research deeper. Build smarter with <span>Array</span>.</h1>
+          <p>
+            Array combines voice AI, image search, deep research, science discovery, stock understanding, and music generation into one advanced intelligence platform.
+          </p>
+
+          <div class="hero-actions">
+            <button class="btn-primary btn-large">Get Started</button>
+            <button class="btn-secondary btn-large">Book a Demo</button>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card"><strong>4</strong><span>AI Labs</span></div>
+            <div class="stat-card"><strong>24/7</strong><span>Intelligence</span></div>
+            <div class="stat-card"><strong>∞</strong><span>Research</span></div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="glow glow-1"></div>
+          <div class="glow glow-2"></div>
+
+          <div class="dashboard-card">
+            <div class="window-bar">
+              <div class="dot dot-red"></div>
+              <div class="dot dot-yellow"></div>
+              <div class="dot dot-green"></div>
+            </div>
+
+            <div class="dashboard-panel">
+              <div class="panel-head">
+                <p>Array AI</p>
+                <span>Live</span>
+              </div>
+
+              <div class="chips">
+                <span class="chip">Voice</span>
+                <span class="chip">Image</span>
+                <span class="chip">Research</span>
+              </div>
+
+              <div class="metric-grid">
+                <div class="metric-box"><small>Science</small><strong>128</strong></div>
+                <div class="metric-box"><small>Stocks</small><strong>+4.8%</strong></div>
+                <div class="metric-box"><small>Research</small><strong>72</strong></div>
+                <div class="metric-box"><small>Music</small><strong>18</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Features</span>
+            <h2>Everything your AI stack needs</h2>
+          </div>
+          <p>Built for research, analysis, creativity, and rapid decision-making.</p>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🎙️</div>
+            <h3>Voice AI</h3>
+            <p>Talk naturally and get context-aware answers in real time.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🖼️</div>
+            <h3>Image Search</h3>
+            <p>Search visual inputs and identify patterns through AI analysis.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔎</div>
+            <h3>Deep Research</h3>
+            <p>Turn broad queries into meaningful insight and actionable knowledge.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- FEATURES PAGE -->
+  <div id="features" class="page">
+    <div class="page-header">
+      <div class="container">
+        <span class="eyebrow">Features</span>
+        <h1>Powerful features built for modern AI workflows</h1>
+      </div>
+    </div>
+
+    <div class="container" style="padding: 40px 0;">
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🎙️</div>
+          <h3>Voice AI</h3>
+          <p>Streamlined voice interaction for faster, more natural communication with your AI assistant.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🖼️</div>
+          <h3>Image Search</h3>
+          <p>Discover and understand visual content through AI-powered discovery tools and analysis.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔎</div>
+          <h3>Deep Research</h3>
+          <p>Search, compare, and synthesize complex information with structured insight and clarity.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🧪</div>
+          <h3>Science Lab</h3>
+          <p>Explore the world of science with clarity and practical understanding of complex topics.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📈</div>
+          <h3>Stock Lab</h3>
+          <p>Track markets and understand a selected country's economic direction and trends.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎵</div>
+          <h3>Music Lab</h3>
+          <p>Create songs, tune ideas, and mood-based concepts with creative support and guidance.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LABS PAGE -->
+  <div id="labs" class="page">
+    <div class="page-header">
+      <div class="container">
+        <span class="eyebrow">Labs</span>
+        <h1>Specialized AI environments</h1>
+      </div>
+    </div>
+
+    <div class="container" style="padding: 40px 0;">
+      <div class="lab-grid">
+        <div class="lab-card">
+          <h3>Science Lab</h3>
+          <p>Search scientific topics, explain concepts, and break them into simple, actionable insights.</p>
+          <ul>
+            <li>Topic exploration</li>
+            <li>Concept breakdown</li>
+            <li>Scientific summaries</li>
+          </ul>
+        </div>
+        <div class="lab-card">
+          <h3>Stock Lab</h3>
+          <p>Track market movement and gather overview insight for a selected country or index.</p>
+          <ul>
+            <li>Market tracking</li>
+            <li>Country analysis</li>
+            <li>Trend summaries</li>
+          </ul>
+        </div>
+        <div class="lab-card">
+          <h3>Research Lab</h3>
+          <p>Summarize articles and research notes while keeping the most important findings visible.</p>
+          <ul>
+            <li>Research queries</li>
+            <li>Summary generation</li>
+            <li>Insight extraction</li>
+          </ul>
+        </div>
+        <div class="lab-card">
+          <h3>Music Lab</h3>
+          <p>Create new song ideas, tune direction, and artist-ready creative prompts.</p>
+          <ul>
+            <li>Music prompts</li>
+            <li>Song concepts</li>
+            <li>Mood and rhythm guidance</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRICING PAGE -->
+  <div id="pricing" class="page">
+    <div class="page-header">
+      <div class="container">
+        <span class="eyebrow">Pricing</span>
+        <h1>Choose the right plan for your workflow</h1>
+      </div>
+    </div>
+
+    <div class="container" style="padding: 40px 0;">
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <h3>Starter</h3>
+          <div class="price">$19<span>/mo</span></div>
+          <ul>
+            <li>Basic AI chat</li>
+            <li>Science and research tools</li>
+            <li>Voice assistant access</li>
+          </ul>
+          <button class="btn-secondary btn-full">Get Started</button>
+        </div>
+
+        <div class="pricing-card featured">
+          <span class="badge">Popular</span>
+          <h3>Pro</h3>
+          <div class="price">$49<span>/mo</span></div>
+          <ul>
+            <li>Everything in Starter</li>
+            <li>Deep research workflows</li>
+            <li>Priority AI response</li>
+          </ul>
+          <button class="btn-primary btn-full">Start Pro</button>
+        </div>
+
+        <div class="pricing-card">
+          <h3>Enterprise</h3>
+          <div class="price">Custom</div>
+          <ul>
+            <li>Custom workflows</li>
+            <li>Private deployment</li>
+            <li>Team and governance support</li>
+          </ul>
+          <button class="btn-secondary btn-full">Talk to Sales</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD PAGE -->
+  <div id="dashboard" class="page">
+    <div class="page-header">
+      <div class="container">
+        <span class="eyebrow">Dashboard</span>
+        <h1>AI Control Center</h1>
+      </div>
+    </div>
+
+    <div class="container" style="padding: 40px 0;">
+      <div class="dashboard-grid">
+        <div class="dashboard-item">
+          <small>Voice Status</small>
+          <strong>Active</strong>
+        </div>
+        <div class="dashboard-item">
+          <small>Research Queue</small>
+          <strong>8 Tasks</strong>
+        </div>
+        <div class="dashboard-item">
+          <small>Stock Overview</small>
+          <strong>+4.8%</strong>
+        </div>
+        <div class="dashboard-item">
+          <small>Science Summary</small>
+          <strong>Ready</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT PAGE -->
+  <div id="about" class="page">
+    <div class="page-header">
+      <div class="container">
+        <span class="eyebrow">About</span>
+        <h1>Built for Intelligent Work</h1>
+      </div>
+    </div>
+
+    <div class="container" style="padding: 40px 0; max-width: 800px;">
+      <div style="background: rgba(11, 22, 39, 0.82); border: 1px solid var(--border); border-radius: 22px; padding: 26px; color: var(--muted); line-height: 1.8;">
+        <p>Array was designed to unite multiple AI workflows into one system so users can think, research, create, and act with a single platform in mind.</p>
+        <p>It blends core analysis, voice interfaces, academic depth, market tracking, and creative generation into a unified intelligence layer that helps you work smarter and faster.</p>
+        <p>Whether you're exploring science, tracking markets, conducting research, or creating music, Array brings all the tools together in one unified, powerful platform.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT PAGE -->
+  <div id="contact" class="page">
+    <div class="page-header">
+      <div class="container">
+        <span class="eyebrow">Contact</span>
+        <h1>Get in Touch</h1>
+      </div>
+    </div>
+
+    <div class="container" style="padding: 40px 0;">
+      <form class="contact-form">
+        <input type="text" placeholder="Your name" required />
+        <input type="email" placeholder="Your email" required />
+        <textarea placeholder="Tell us about your project" required></textarea>
+        <button type="submit" class="btn-primary">Send Message</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container footer-row">
+      <div class="logo" style="margin: 0;">
+        <div class="logo-mark">A</div>
+        <span>ARRAY</span>
+      </div>
+
+      <ul class="footer-links">
+        <li><a onclick="showPage('features')">Features</a></li>
+        <li><a onclick="showPage('labs')">Labs</a></li>
+        <li><a onclick="showPage('pricing')">Pricing</a></li>
+        <li><a onclick="showPage('contact')">Contact</a></li>
+      </ul>
+
+      <p>© 2026 Array AI</p>
+    </div>
+  </footer>
+
+  <script>
+    function showPage(pageId) {
+      // Hide all pages
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+
+      // Show selected page
+      document.getElementById(pageId).classList.add('active');
+
+      // Update nav links
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.classList.remove('active');
+      });
+      document.getElementById('nav-' + pageId).classList.add('active');
+
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
+  </script>
+</body>
+</html>
