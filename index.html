@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Array - Advanced AI Intelligence System</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%238b5cf6' width='100' height='100' rx='20'/%3E%3Ctext x='50' y='65' font-size='60' font-weight='bold' text-anchor='middle' fill='white'%3EA%3C/text%3E%3C/svg%3E" />
   <style>
     * {
       margin: 0;
@@ -12,16 +13,20 @@
     }
 
     :root {
-      --bg: #07111f;
-      --bg-soft: #0d1d33;
-      --panel: rgba(11, 22, 39, 0.9);
-      --border: rgba(148, 163, 184, 0.14);
-      --text: #edf5ff;
-      --muted: #b7c9e7;
-      --blue: #60a5fa;
-      --purple: #8b5cf6;
-      --cyan: #7dd3fc;
-      --green: #34d399;
+      --bg-dark: #0a0e1a;
+      --bg-soft: #1a1f3a;
+      --bg-accent: #2d1b69;
+      --panel: rgba(15, 12, 35, 0.95);
+      --border: rgba(184, 134, 11, 0.25);
+      --border-accent: rgba(255, 165, 0, 0.3);
+      --text: #f5f5f5;
+      --text-light: #d4af37;
+      --muted: #a8a8a8;
+      --gold: #d4af37;
+      --saffron: #ff9933;
+      --green: #138808;
+      --blue-accent: #4a90e2;
+      --purple-accent: #8b5cf6;
     }
 
     html {
@@ -29,20 +34,38 @@
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(96, 165, 250, 0.18), transparent 28%),
-        radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.18), transparent 30%),
-        linear-gradient(135deg, var(--bg), var(--bg-soft));
+      font-family: 'Segoe UI', 'Trebuchet MS', sans-serif;
+      background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-soft) 50%, var(--bg-accent) 100%);
       color: var(--text);
       min-height: 100vh;
       line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Indian Pattern Background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(212, 175, 55, 0.03) 35px, rgba(212, 175, 55, 0.03) 70px),
+        repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(255, 153, 51, 0.03) 35px, rgba(255, 153, 51, 0.03) 70px),
+        radial-gradient(circle at 20% 50%, rgba(19, 136, 8, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(74, 144, 226, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
     }
 
     .page {
       display: none;
       opacity: 0;
       transition: opacity 0.3s ease;
+      position: relative;
+      z-index: 1;
     }
 
     .page.active {
@@ -51,109 +74,152 @@
     }
 
     .container {
-      max-width: 1180px;
+      max-width: 1280px;
       margin: 0 auto;
       padding: 0 20px;
+      position: relative;
+      z-index: 1;
     }
 
     header {
       position: sticky;
       top: 0;
       z-index: 100;
-      backdrop-filter: blur(16px);
-      background: rgba(7, 17, 31, 0.72);
-      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      background: rgba(10, 14, 26, 0.85);
+      border-bottom: 2px solid var(--border);
+      box-shadow: 0 8px 32px rgba(212, 175, 55, 0.1);
     }
 
     nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      min-height: 78px;
-      gap: 16px;
+      min-height: 80px;
+      gap: 20px;
     }
 
     .logo {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      font-size: 1.2rem;
+      gap: 12px;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      font-size: 1.4rem;
       cursor: pointer;
       text-decoration: none;
-      color: var(--text);
+      color: var(--text-light);
+      text-transform: uppercase;
+      text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
     }
 
     .logo-mark {
       display: grid;
       place-items: center;
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, var(--blue), var(--purple));
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--saffron), var(--purple-accent));
       color: white;
-      box-shadow: 0 10px 24px rgba(96, 165, 250, 0.4);
+      box-shadow: 0 0 30px rgba(255, 153, 51, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.2);
+      font-weight: 900;
+      font-size: 1.5rem;
     }
 
     .nav-links {
       display: flex;
-      gap: 28px;
+      gap: 30px;
       list-style: none;
     }
 
     .nav-links a {
-      color: var(--muted);
+      color: var(--text-light);
       text-decoration: none;
       cursor: pointer;
-      transition: color 0.2s ease;
+      transition: all 0.3s ease;
+      position: relative;
+      font-size: 0.95rem;
+      font-weight: 600;
     }
 
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: var(--text);
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--saffron), var(--green));
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .nav-links a:hover {
+      color: var(--saffron);
+      text-shadow: 0 0 10px rgba(255, 153, 51, 0.5);
     }
 
     .nav-actions {
       display: flex;
-      gap: 12px;
+      gap: 14px;
       align-items: center;
     }
 
     button {
-      border-radius: 12px;
-      padding: 12px 18px;
+      border-radius: 8px;
+      padding: 12px 20px;
       font-weight: 700;
-      border: 1px solid transparent;
+      border: 2px solid transparent;
       cursor: pointer;
-      transition: transform 0.18s ease;
-      font-size: 1rem;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     button:hover {
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--blue), var(--purple));
+      background: linear-gradient(135deg, var(--saffron), var(--purple-accent));
       color: white;
-      box-shadow: 0 14px 30px rgba(96, 165, 250, 0.3);
+      box-shadow: 0 0 20px rgba(255, 153, 51, 0.4);
+      border-color: var(--saffron);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 0 40px rgba(255, 153, 51, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.2);
     }
 
     .btn-secondary {
-      background: rgba(255, 255, 255, 0.04);
-      border-color: var(--border);
-      color: var(--text);
+      background: rgba(212, 175, 55, 0.1);
+      border-color: var(--gold);
+      color: var(--text-light);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(212, 175, 55, 0.2);
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
     }
 
     .btn-ghost {
       background: transparent;
       border-color: var(--border);
-      color: var(--text);
+      color: var(--text-light);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(212, 175, 55, 0.1);
     }
 
     .btn-large {
-      padding: 16px 24px;
+      padding: 16px 28px;
       font-size: 1.05rem;
     }
 
@@ -161,302 +227,432 @@
       width: 100%;
     }
 
-    /* Home Page */
+    /* Hero Section */
     .hero {
-      padding: 80px 0 40px;
+      padding: 100px 0 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(255, 153, 51, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      filter: blur(40px);
+    }
+
+    .hero::after {
+      content: '🕉️';
+      position: absolute;
+      top: 10%;
+      right: 5%;
+      font-size: 200px;
+      opacity: 0.08;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
     }
 
     .hero-grid {
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
       align-items: center;
-      gap: 36px;
+      gap: 40px;
     }
 
     .eyebrow {
       display: inline-block;
-      margin-bottom: 18px;
-      color: var(--cyan);
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--saffron);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      font-weight: 900;
       text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(255, 153, 51, 0.5);
     }
 
     .hero h1 {
-      font-size: clamp(2.8rem, 5vw, 5rem);
-      line-height: 0.98;
-      letter-spacing: -0.07em;
-      margin-bottom: 20px;
-    }
-
-    .hero h1 span {
-      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.08em;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, var(--text-light) 0%, var(--saffron) 50%, var(--green) 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
 
+    .hero h1 span {
+      background: linear-gradient(45deg, var(--saffron), var(--purple-accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: none;
+    }
+
     .hero p {
-      color: var(--muted);
-      font-size: 1.08rem;
-      line-height: 1.8;
-      margin-bottom: 28px;
-      max-width: 600px;
+      color: var(--text);
+      font-size: 1.12rem;
+      line-height: 1.9;
+      margin-bottom: 32px;
+      max-width: 650px;
+      font-weight: 500;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
-      margin-bottom: 28px;
+      gap: 16px;
+      margin-bottom: 32px;
     }
 
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 24px;
+      gap: 18px;
+      margin-top: 32px;
     }
 
     .stat-card {
-      padding: 18px 12px;
-      border-radius: 16px;
-      background: rgba(15, 31, 52, 0.7);
-      border: 1px solid var(--border);
+      padding: 20px 16px;
+      border-radius: 12px;
+      background: rgba(212, 175, 55, 0.08);
+      border: 2px solid var(--border);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(255, 153, 51, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .stat-card:hover {
+      border-color: var(--saffron);
+      background: rgba(255, 153, 51, 0.12);
+      transform: translateY(-5px);
     }
 
     .stat-card strong {
       display: block;
-      font-size: 1.4rem;
-      margin-bottom: 8px;
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+      color: var(--text-light);
+      position: relative;
+      z-index: 1;
     }
 
     .stat-card span {
       color: var(--muted);
-      font-size: 0.8rem;
+      font-size: 0.85rem;
+      position: relative;
+      z-index: 1;
     }
 
     .hero-visual {
       position: relative;
-      min-height: 540px;
+      min-height: 560px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .glow {
+    .orb {
       position: absolute;
       border-radius: 50%;
-      filter: blur(20px);
-      opacity: 0.8;
+      filter: blur(30px);
+      opacity: 0.7;
     }
 
-    .glow-1 {
+    .orb-1 {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255, 153, 51, 0.8), rgba(255, 153, 51, 0.1) 60%, transparent 70%);
+      left: 20px;
+      top: 30px;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    .orb-2 {
       width: 280px;
       height: 280px;
-      background: radial-gradient(circle, rgba(96, 165, 250, 0.9), rgba(96, 165, 250, 0.12) 55%, transparent 70%);
-      left: 36px;
-      top: 40px;
+      background: radial-gradient(circle, rgba(19, 136, 8, 0.8), rgba(19, 136, 8, 0.1) 60%, transparent 70%);
+      right: 10px;
+      bottom: 20px;
+      animation: pulse 5s ease-in-out infinite;
     }
 
-    .glow-2 {
-      width: 260px;
-      height: 260px;
-      background: radial-gradient(circle, rgba(139, 92, 246, 0.9), rgba(139, 92, 246, 0.12) 55%, transparent 70%);
-      right: 32px;
-      bottom: 26px;
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.1); opacity: 0.5; }
     }
 
     .dashboard-card {
       position: relative;
-      width: min(100%, 520px);
-      padding: 16px;
-      border-radius: 28px;
-      background: rgba(9, 19, 31, 0.82);
-      border: 1px solid var(--border);
-      box-shadow: 0 28px 60px rgba(2, 6, 23, 0.7);
+      width: min(100%, 540px);
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(10, 14, 26, 0.92);
+      border: 2px solid var(--border-accent);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 153, 51, 0.2);
+      backdrop-filter: blur(20px);
+      z-index: 10;
     }
 
     .window-bar {
       display: flex;
-      gap: 10px;
-      padding: 8px 6px 18px;
+      gap: 12px;
+      padding: 12px 8px 20px;
     }
 
     .dot {
-      width: 12px;
-      height: 12px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
+      box-shadow: 0 0 8px currentColor;
     }
 
-    .dot-red { background: #f87171; }
-    .dot-yellow { background: #fbbf24; }
-    .dot-green { background: #34d399; }
+    .dot-red { background: #ff6b6b; }
+    .dot-yellow { background: #ffd93d; }
+    .dot-green { background: #6bcf7f; }
 
     .dashboard-panel {
-      background: rgba(255, 255, 255, 0.035);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 18px;
+      background: rgba(255, 153, 51, 0.05);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
     }
 
     .panel-head {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .panel-head p {
       margin: 0;
       font-weight: 700;
+      color: var(--text-light);
+      font-size: 1.1rem;
     }
 
     .panel-head span {
       display: inline-flex;
-      padding: 6px 10px;
+      padding: 6px 12px;
       border-radius: 999px;
-      background: rgba(52, 211, 153, 0.12);
+      background: rgba(19, 136, 8, 0.15);
       color: var(--green);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
+      border: 1px solid var(--green);
     }
 
     .chips {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 18px;
+      gap: 10px;
+      margin-bottom: 16px;
     }
 
     .chip {
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: rgba(96, 165, 250, 0.08);
-      border: 1px solid rgba(96, 165, 250, 0.2);
-      color: #dfeefb;
-      font-size: 0.75rem;
+      padding: 8px 14px;
+      border-radius: 20px;
+      background: rgba(255, 153, 51, 0.12);
+      border: 1px solid rgba(255, 153, 51, 0.3);
+      color: var(--saffron);
+      font-size: 0.78rem;
+      font-weight: 600;
     }
 
     .metric-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
+      gap: 14px;
     }
 
     .metric-box {
-      padding: 18px 14px;
-      background: rgba(255, 255, 255, 0.02);
+      padding: 16px 12px;
+      background: rgba(255, 153, 51, 0.08);
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: 10px;
+      text-align: center;
     }
 
     .metric-box small {
       display: block;
       color: var(--muted);
-      margin-bottom: 10px;
-      font-size: 0.8rem;
+      margin-bottom: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
     }
 
     .metric-box strong {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
+      color: var(--text-light);
     }
 
     .section {
-      padding: 84px 0;
+      padding: 100px 0;
+      position: relative;
+    }
+
+    .section::before {
+      content: '';
+      position: absolute;
+      left: -20%;
+      top: 0;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(19, 136, 8, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      filter: blur(40px);
     }
 
     .section-head {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      gap: 18px;
-      margin-bottom: 28px;
+      gap: 20px;
+      margin-bottom: 32px;
     }
 
     .section-head h2 {
       margin: 0;
-      font-size: clamp(2rem, 3vw, 3rem);
-      letter-spacing: -0.05em;
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      letter-spacing: -0.06em;
+      background: linear-gradient(135deg, var(--text-light), var(--saffron));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     .section-head p {
-      max-width: 580px;
-      color: var(--muted);
-      line-height: 1.7;
+      max-width: 600px;
+      color: var(--text);
+      line-height: 1.8;
       margin: 0;
+      font-weight: 500;
     }
 
     .feature-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 22px;
+      gap: 24px;
     }
 
     .feature-card,
     .lab-card,
     .pricing-card {
-      background: rgba(11, 22, 39, 0.82);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 26px 22px;
-      box-shadow: 0 20px 40px rgba(2, 6, 23, 0.28);
+      background: rgba(15, 12, 35, 0.88);
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 28px 24px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255, 153, 51, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .feature-card:hover,
+    .lab-card:hover,
+    .pricing-card:hover {
+      border-color: var(--saffron);
+      background: rgba(15, 12, 35, 0.95);
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px rgba(255, 153, 51, 0.2);
     }
 
     .feature-icon {
-      font-size: 2.5rem;
-      margin-bottom: 18px;
+      font-size: 3rem;
+      margin-bottom: 16px;
+      display: block;
     }
 
     .feature-card h3,
     .lab-card h3,
     .pricing-card h3 {
-      margin: 0 0 10px;
-      font-size: 1.38rem;
+      margin: 0 0 12px;
+      font-size: 1.4rem;
+      color: var(--text-light);
+      position: relative;
+      z-index: 1;
     }
 
     .feature-card p,
     .lab-card p {
       margin: 0;
-      color: var(--muted);
-      line-height: 1.75;
+      color: var(--text);
+      line-height: 1.8;
+      position: relative;
+      z-index: 1;
     }
 
     .lab-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 22px;
+      gap: 24px;
     }
 
     .lab-card {
-      padding: 28px 22px;
+      padding: 32px 28px;
     }
 
     .lab-card ul {
       list-style: none;
       padding: 0;
-      margin: 12px 0 0;
+      margin: 16px 0 0;
       line-height: 2;
+      position: relative;
+      z-index: 1;
     }
 
     .lab-card li {
-      padding-left: 18px;
+      padding-left: 22px;
       position: relative;
+      color: var(--text);
     }
 
     .lab-card li::before {
       content: '✓';
       position: absolute;
       left: 0;
-      color: var(--green);
+      color: var(--saffron);
       font-weight: bold;
+      font-size: 1.1rem;
     }
 
     .pricing-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 22px;
+      gap: 24px;
     }
 
     .pricing-card {
@@ -464,44 +660,55 @@
     }
 
     .pricing-card.featured {
-      border-color: rgba(96, 165, 250, 0.5);
-      transform: translateY(-6px);
+      border-color: var(--saffron);
+      transform: scale(1.05);
+    }
+
+    .pricing-card.featured:hover {
+      transform: scale(1.05) translateY(-8px);
     }
 
     .badge {
       position: absolute;
-      top: 18px;
-      right: 18px;
-      background: rgba(96, 165, 250, 0.14);
-      padding: 6px 10px;
-      border-radius: 999px;
-      color: var(--cyan);
-      font-size: 0.68rem;
-      font-weight: 700;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, var(--saffron), var(--purple-accent));
+      padding: 8px 12px;
+      border-radius: 20px;
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      box-shadow: 0 0 15px rgba(255, 153, 51, 0.4);
     }
 
     .price {
-      font-size: 2.2rem;
-      font-weight: 800;
-      letter-spacing: -0.06em;
-      margin: 18px 0;
+      font-size: 2.5rem;
+      font-weight: 900;
+      letter-spacing: -0.08em;
+      margin: 20px 0;
+      color: var(--text-light);
+      position: relative;
+      z-index: 1;
     }
 
     .price span {
-      font-size: 0.95rem;
+      font-size: 1rem;
       color: var(--muted);
     }
 
     .pricing-card ul {
       list-style: none;
       padding: 0;
-      margin: 0 0 20px;
-      line-height: 2;
+      margin: 0 0 24px;
+      line-height: 2.2;
+      position: relative;
+      z-index: 1;
     }
 
     .pricing-card li {
-      color: var(--muted);
-      padding-left: 18px;
+      color: var(--text);
+      padding-left: 22px;
       position: relative;
     }
 
@@ -509,107 +716,176 @@
       content: '✓';
       position: absolute;
       left: 0;
-      color: var(--green);
+      color: var(--saffron);
+      font-weight: bold;
     }
 
     .page-header {
-      padding: 70px 0;
+      padding: 80px 0;
       text-align: center;
+      position: relative;
+      z-index: 1;
     }
 
     .page-header h1 {
-      font-size: clamp(2.1rem, 3vw, 3.2rem);
-      line-height: 1.1;
-      letter-spacing: -0.07em;
-      margin-bottom: 12px;
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      line-height: 1.15;
+      letter-spacing: -0.08em;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--text-light), var(--saffron));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     .contact-form {
-      max-width: 760px;
+      max-width: 800px;
       margin: 0 auto;
-      background: rgba(11, 22, 39, 0.82);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 24px;
+      background: rgba(15, 12, 35, 0.88);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
       display: grid;
-      gap: 14px;
+      gap: 18px;
+      position: relative;
+      z-index: 1;
     }
 
     .contact-form input,
     .contact-form textarea {
-      padding: 14px 16px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.02);
+      padding: 14px 18px;
+      border-radius: 10px;
+      border: 2px solid var(--border);
+      background: rgba(255, 153, 51, 0.05);
       color: var(--text);
       font-family: inherit;
+      transition: all 0.3s ease;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      border-color: var(--saffron);
+      background: rgba(255, 153, 51, 0.1);
+      box-shadow: 0 0 15px rgba(255, 153, 51, 0.2);
     }
 
     .contact-form textarea {
-      min-height: 140px;
+      min-height: 150px;
       resize: vertical;
     }
 
     .dashboard-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 22px;
-      margin-top: 28px;
+      gap: 24px;
+      position: relative;
+      z-index: 1;
     }
 
     .dashboard-item {
-      background: rgba(11, 22, 39, 0.82);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 28px 22px;
+      background: rgba(15, 12, 35, 0.88);
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 28px 24px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dashboard-item::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(19, 136, 8, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .dashboard-item:hover {
+      border-color: var(--green);
+      transform: translateY(-5px);
     }
 
     .dashboard-item small {
       display: block;
       color: var(--muted);
       margin-bottom: 12px;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      position: relative;
+      z-index: 1;
     }
 
     .dashboard-item strong {
-      font-size: 1.8rem;
+      font-size: 2rem;
+      color: var(--text-light);
+      position: relative;
+      z-index: 1;
+    }
+
+    .story-block {
+      display: grid;
+      gap: 16px;
+      background: rgba(15, 12, 35, 0.88);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      position: relative;
+      z-index: 1;
+      line-height: 1.9;
+      font-size: 1.05rem;
+    }
+
+    .story-block p {
+      margin: 0;
+      color: var(--text);
     }
 
     footer {
-      padding: 30px 0 60px;
-      border-top: 1px solid var(--border);
+      padding: 32px 0 60px;
+      border-top: 2px solid var(--border);
+      position: relative;
+      z-index: 1;
+      background: rgba(10, 14, 26, 0.5);
     }
 
     .footer-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
     .footer-links {
       display: flex;
-      gap: 18px;
+      gap: 20px;
       list-style: none;
     }
 
     .footer-links a {
-      color: var(--muted);
+      color: var(--text-light);
       text-decoration: none;
       cursor: pointer;
-      transition: color 0.2s ease;
+      transition: all 0.3s ease;
+      font-weight: 600;
     }
 
     .footer-links a:hover {
-      color: var(--text);
+      color: var(--saffron);
+      text-shadow: 0 0 10px rgba(255, 153, 51, 0.5);
     }
 
     footer p {
       color: var(--muted);
       margin: 0;
+      font-weight: 500;
     }
 
-    @media (max-width: 960px) {
+    @media (max-width: 1024px) {
       .hero-grid,
       .feature-grid,
       .lab-grid,
@@ -626,15 +902,27 @@
       .stats-grid {
         grid-template-columns: 1fr;
       }
+
+      .pricing-card.featured {
+        transform: scale(1);
+      }
+
+      .pricing-card.featured:hover {
+        transform: translateY(-8px);
+      }
     }
 
-    @media (max-width: 720px) {
+    @media (max-width: 768px) {
       .nav-links {
         display: none;
       }
 
       .hero {
-        padding-top: 52px;
+        padding-top: 60px;
+      }
+
+      .hero::after {
+        font-size: 100px;
       }
 
       .footer-row {
@@ -643,8 +931,12 @@
       }
 
       button {
-        padding: 12px 16px;
-        font-size: 0.95rem;
+        padding: 12px 18px;
+        font-size: 0.9rem;
+      }
+
+      .nav-actions {
+        gap: 10px;
       }
     }
   </style>
@@ -681,27 +973,27 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <span class="eyebrow">AI Data System</span>
-          <h1>Think faster. Research deeper. Build smarter with <span>Array</span>.</h1>
+          <span class="eyebrow">AI Intelligence Platform</span>
+          <h1>Transform Knowledge Into <span>Power</span> with Array</h1>
           <p>
-            Array combines voice AI, image search, deep research, science discovery, stock understanding, and music generation into one advanced intelligence platform.
+            Array is an advanced AI intelligence system combining voice AI, deep research, image search, science discovery, stock market understanding, and music creation into one unified platform inspired by Indian wisdom and modern innovation.
           </p>
 
           <div class="hero-actions">
-            <button class="btn-primary btn-large">Get Started</button>
-            <button class="btn-secondary btn-large">Book a Demo</button>
+            <button class="btn-primary btn-large">Start Your Journey</button>
+            <button class="btn-secondary btn-large">View Demo</button>
           </div>
 
           <div class="stats-grid">
-            <div class="stat-card"><strong>4</strong><span>AI Labs</span></div>
-            <div class="stat-card"><strong>24/7</strong><span>Intelligence</span></div>
-            <div class="stat-card"><strong>∞</strong><span>Research</span></div>
+            <div class="stat-card"><strong>4</strong><span>Specialized Labs</span></div>
+            <div class="stat-card"><strong>24/7</strong><span>AI Assistance</span></div>
+            <div class="stat-card"><strong>∞</strong><span>Knowledge Access</span></div>
           </div>
         </div>
 
         <div class="hero-visual">
-          <div class="glow glow-1"></div>
-          <div class="glow glow-2"></div>
+          <div class="orb orb-1"></div>
+          <div class="orb orb-2"></div>
 
           <div class="dashboard-card">
             <div class="window-bar">
@@ -712,21 +1004,21 @@
 
             <div class="dashboard-panel">
               <div class="panel-head">
-                <p>Array AI</p>
-                <span>Live</span>
+                <p>Array Intelligence</p>
+                <span>ACTIVE</span>
               </div>
 
               <div class="chips">
-                <span class="chip">Voice</span>
-                <span class="chip">Image</span>
-                <span class="chip">Research</span>
+                <span class="chip">Voice Processing</span>
+                <span class="chip">Image Analysis</span>
+                <span class="chip">Deep Learning</span>
               </div>
 
               <div class="metric-grid">
-                <div class="metric-box"><small>Science</small><strong>128</strong></div>
-                <div class="metric-box"><small>Stocks</small><strong>+4.8%</strong></div>
-                <div class="metric-box"><small>Research</small><strong>72</strong></div>
-                <div class="metric-box"><small>Music</small><strong>18</strong></div>
+                <div class="metric-box"><small>Science Insights</small><strong>942</strong></div>
+                <div class="metric-box"><small>Market Analysis</small><strong>+6.3%</strong></div>
+                <div class="metric-box"><small>Completed Research</small><strong>187</strong></div>
+                <div class="metric-box"><small>Created Compositions</small><strong>52</strong></div>
               </div>
             </div>
           </div>
@@ -738,27 +1030,27 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <span class="eyebrow">Features</span>
-            <h2>Everything your AI stack needs</h2>
+            <span class="eyebrow">Capabilities</span>
+            <h2>Everything You Need For Advanced Intelligence</h2>
           </div>
-          <p>Built for research, analysis, creativity, and rapid decision-making.</p>
+          <p>Built for research, analysis, creativity, and decision-making with cutting-edge AI technology.</p>
         </div>
 
         <div class="feature-grid">
           <div class="feature-card">
-            <div class="feature-icon">🎙️</div>
+            <span class="feature-icon">🎙️</span>
             <h3>Voice AI</h3>
-            <p>Talk naturally and get context-aware answers in real time.</p>
+            <p>Interact naturally with advanced voice processing for seamless communication and instant insights.</p>
           </div>
           <div class="feature-card">
-            <div class="feature-icon">🖼️</div>
-            <h3>Image Search</h3>
-            <p>Search visual inputs and identify patterns through AI analysis.</p>
+            <span class="feature-icon">🖼️</span>
+            <h3>Image Understanding</h3>
+            <p>Analyze visual content with AI-powered vision to identify patterns and extract meaningful data.</p>
           </div>
           <div class="feature-card">
-            <div class="feature-icon">🔎</div>
+            <span class="feature-icon">🔬</span>
             <h3>Deep Research</h3>
-            <p>Turn broad queries into meaningful insight and actionable knowledge.</p>
+            <p>Synthesize complex information into actionable knowledge with structured analysis and insights.</p>
           </div>
         </div>
       </div>
@@ -769,42 +1061,42 @@
   <div id="features" class="page">
     <div class="page-header">
       <div class="container">
-        <span class="eyebrow">Features</span>
-        <h1>Powerful features built for modern AI workflows</h1>
+        <span class="eyebrow">Capabilities</span>
+        <h1>Advanced AI Features For Modern Challenges</h1>
       </div>
     </div>
 
     <div class="container" style="padding: 40px 0;">
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="feature-icon">🎙️</div>
-          <h3>Voice AI</h3>
-          <p>Streamlined voice interaction for faster, more natural communication with your AI assistant.</p>
+          <span class="feature-icon">🎙️</span>
+          <h3>Voice Intelligence</h3>
+          <p>Natural language processing with context awareness for fluid voice interactions and immediate responses.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">🖼️</div>
-          <h3>Image Search</h3>
-          <p>Discover and understand visual content through AI-powered discovery tools and analysis.</p>
+          <span class="feature-icon">🖼️</span>
+          <h3>Visual Analysis</h3>
+          <p>Computer vision technology to understand images, identify objects, and extract visual intelligence.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">🔎</div>
-          <h3>Deep Research</h3>
-          <p>Search, compare, and synthesize complex information with structured insight and clarity.</p>
+          <span class="feature-icon">📚</span>
+          <h3>Knowledge Synthesis</h3>
+          <p>Transform raw information into structured knowledge with advanced summarization and analysis.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">🧪</div>
-          <h3>Science Lab</h3>
-          <p>Explore the world of science with clarity and practical understanding of complex topics.</p>
+          <span class="feature-icon">🔍</span>
+          <h3>Deep Research Engine</h3>
+          <p>Access comprehensive research capabilities across multiple domains and knowledge bases.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">📈</div>
-          <h3>Stock Lab</h3>
-          <p>Track markets and understand a selected country's economic direction and trends.</p>
+          <span class="feature-icon">⚡</span>
+          <h3>Real-Time Processing</h3>
+          <p>Instant computation and analysis with high-speed data processing and immediate results.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">🎵</div>
-          <h3>Music Lab</h3>
-          <p>Create songs, tune ideas, and mood-based concepts with creative support and guidance.</p>
+          <span class="feature-icon">🎯</span>
+          <h3>Intelligent Predictions</h3>
+          <p>Advanced machine learning for accurate forecasting and intelligent decision support systems.</p>
         </div>
       </div>
     </div>
@@ -814,47 +1106,51 @@
   <div id="labs" class="page">
     <div class="page-header">
       <div class="container">
-        <span class="eyebrow">Labs</span>
-        <h1>Specialized AI environments</h1>
+        <span class="eyebrow">Specialized Environments</span>
+        <h1>Four Powerful AI Lab Modules</h1>
       </div>
     </div>
 
     <div class="container" style="padding: 40px 0;">
       <div class="lab-grid">
         <div class="lab-card">
-          <h3>Science Lab</h3>
-          <p>Search scientific topics, explain concepts, and break them into simple, actionable insights.</p>
+          <h3>🧪 Science Lab</h3>
+          <p>Explore scientific topics with deep explanations, research summaries, and breakthrough insights across all scientific disciplines.</p>
           <ul>
-            <li>Topic exploration</li>
-            <li>Concept breakdown</li>
-            <li>Scientific summaries</li>
+            <li>Scientific Research Queries</li>
+            <li>Concept Simplification</li>
+            <li>Academic Summaries</li>
+            <li>Experiment Guidance</li>
           </ul>
         </div>
         <div class="lab-card">
-          <h3>Stock Lab</h3>
-          <p>Track market movement and gather overview insight for a selected country or index.</p>
+          <h3>📈 Stock Lab</h3>
+          <p>Monitor global markets with country-specific analysis, trend tracking, and intelligent market overview reports.</p>
           <ul>
-            <li>Market tracking</li>
-            <li>Country analysis</li>
-            <li>Trend summaries</li>
+            <li>Real-time Market Tracking</li>
+            <li>Country-Level Analysis</li>
+            <li>Trend Summarization</li>
+            <li>Investment Insights</li>
           </ul>
         </div>
         <div class="lab-card">
-          <h3>Research Lab</h3>
-          <p>Summarize articles and research notes while keeping the most important findings visible.</p>
+          <h3>📖 Research Lab</h3>
+          <p>Summarize academic papers, extract key findings, and organize research into actionable briefs and insights.</p>
           <ul>
-            <li>Research queries</li>
-            <li>Summary generation</li>
-            <li>Insight extraction</li>
+            <li>Paper Summarization</li>
+            <li>Key Finding Extraction</li>
+            <li>Research Brief Generation</li>
+            <li>Citation Organization</li>
           </ul>
         </div>
         <div class="lab-card">
-          <h3>Music Lab</h3>
-          <p>Create new song ideas, tune direction, and artist-ready creative prompts.</p>
+          <h3>🎵 Music Lab</h3>
+          <p>Generate creative song concepts, musical ideas, and compositions with mood-based guidance and artistic direction.</p>
           <ul>
-            <li>Music prompts</li>
-            <li>Song concepts</li>
-            <li>Mood and rhythm guidance</li>
+            <li>Lyric Generation</li>
+            <li>Melody Suggestions</li>
+            <li>Composition Guidance</li>
+            <li>Mood-Based Creation</li>
           </ul>
         </div>
       </div>
@@ -865,45 +1161,50 @@
   <div id="pricing" class="page">
     <div class="page-header">
       <div class="container">
-        <span class="eyebrow">Pricing</span>
-        <h1>Choose the right plan for your workflow</h1>
+        <span class="eyebrow">Plans</span>
+        <h1>Choose Your Path to Intelligence</h1>
       </div>
     </div>
 
     <div class="container" style="padding: 40px 0;">
       <div class="pricing-grid">
         <div class="pricing-card">
-          <h3>Starter</h3>
-          <div class="price">$19<span>/mo</span></div>
+          <h3>Explorer</h3>
+          <div class="price">$29<span>/month</span></div>
           <ul>
-            <li>Basic AI chat</li>
-            <li>Science and research tools</li>
-            <li>Voice assistant access</li>
+            <li>Basic AI Chat</li>
+            <li>Science Lab Access</li>
+            <li>Voice Assistant</li>
+            <li>100 Monthly Queries</li>
           </ul>
           <button class="btn-secondary btn-full">Get Started</button>
         </div>
 
         <div class="pricing-card featured">
-          <span class="badge">Popular</span>
-          <h3>Pro</h3>
-          <div class="price">$49<span>/mo</span></div>
+          <span class="badge">Most Popular</span>
+          <h3>Professional</h3>
+          <div class="price">$79<span>/month</span></div>
           <ul>
-            <li>Everything in Starter</li>
-            <li>Deep research workflows</li>
-            <li>Priority AI response</li>
+            <li>All Explorer Features</li>
+            <li>All 4 Labs Access</li>
+            <li>Deep Research Engine</li>
+            <li>Unlimited Queries</li>
+            <li>Priority Support</li>
           </ul>
-          <button class="btn-primary btn-full">Start Pro</button>
+          <button class="btn-primary btn-full">Start Now</button>
         </div>
 
         <div class="pricing-card">
           <h3>Enterprise</h3>
-          <div class="price">Custom</div>
+          <div class="price">Custom<span>/month</span></div>
           <ul>
-            <li>Custom workflows</li>
-            <li>Private deployment</li>
-            <li>Team and governance support</li>
+            <li>Custom Workflows</li>
+            <li>Private Deployment</li>
+            <li>Team Collaboration</li>
+            <li>24/7 Support</li>
+            <li>API Access</li>
           </ul>
-          <button class="btn-secondary btn-full">Talk to Sales</button>
+          <button class="btn-secondary btn-full">Contact Sales</button>
         </div>
       </div>
     </div>
@@ -913,28 +1214,36 @@
   <div id="dashboard" class="page">
     <div class="page-header">
       <div class="container">
-        <span class="eyebrow">Dashboard</span>
-        <h1>AI Control Center</h1>
+        <span class="eyebrow">Control Center</span>
+        <h1>Your AI Intelligence Dashboard</h1>
       </div>
     </div>
 
     <div class="container" style="padding: 40px 0;">
       <div class="dashboard-grid">
         <div class="dashboard-item">
-          <small>Voice Status</small>
-          <strong>Active</strong>
+          <small>🎙️ Voice Processing Status</small>
+          <strong>ACTIVE</strong>
         </div>
         <div class="dashboard-item">
-          <small>Research Queue</small>
-          <strong>8 Tasks</strong>
+          <small>🔬 Science Lab Queries</small>
+          <strong>142 Tasks</strong>
         </div>
         <div class="dashboard-item">
-          <small>Stock Overview</small>
+          <small>📈 Market Analysis</small>
           <strong>+4.8%</strong>
         </div>
         <div class="dashboard-item">
-          <small>Science Summary</small>
-          <strong>Ready</strong>
+          <small>🎵 Music Compositions</small>
+          <strong>28 Created</strong>
+        </div>
+        <div class="dashboard-item">
+          <small>📚 Research Completed</small>
+          <strong>89 Papers</strong>
+        </div>
+        <div class="dashboard-item">
+          <small>🖼️ Images Analyzed</small>
+          <strong>256 Images</strong>
         </div>
       </div>
     </div>
@@ -944,16 +1253,22 @@
   <div id="about" class="page">
     <div class="page-header">
       <div class="container">
-        <span class="eyebrow">About</span>
-        <h1>Built for Intelligent Work</h1>
+        <span class="eyebrow">Our Mission</span>
+        <h1>Building Intelligence For Humanity</h1>
       </div>
     </div>
 
-    <div class="container" style="padding: 40px 0; max-width: 800px;">
-      <div style="background: rgba(11, 22, 39, 0.82); border: 1px solid var(--border); border-radius: 22px; padding: 26px; color: var(--muted); line-height: 1.8;">
-        <p>Array was designed to unite multiple AI workflows into one system so users can think, research, create, and act with a single platform in mind.</p>
-        <p>It blends core analysis, voice interfaces, academic depth, market tracking, and creative generation into a unified intelligence layer that helps you work smarter and faster.</p>
-        <p>Whether you're exploring science, tracking markets, conducting research, or creating music, Array brings all the tools together in one unified, powerful platform.</p>
+    <div class="container" style="padding: 40px 0; max-width: 900px;">
+      <div class="story-block">
+        <p>
+          Array was born from a vision to unite the power of artificial intelligence with the wisdom of human knowledge. Inspired by Indian philosophy of interconnectedness and modern innovation, we created a platform that brings together multiple AI capabilities into one harmonious system.
+        </p>
+        <p>
+          Our mission is to democratize advanced AI technology, making powerful research, analysis, creativity, and insight accessible to everyone. Whether you're exploring science, tracking markets, conducting research, or creating art, Array empowers you with intelligent tools.
+        </p>
+        <p>
+          Built on principles of transparency, reliability, and user-centric design, Array represents the next generation of AI platforms—one that respects your intelligence and enhances your capabilities.
+        </p>
       </div>
     </div>
   </div>
@@ -962,16 +1277,17 @@
   <div id="contact" class="page">
     <div class="page-header">
       <div class="container">
-        <span class="eyebrow">Contact</span>
-        <h1>Get in Touch</h1>
+        <span class="eyebrow">Get In Touch</span>
+        <h1>Connect With Us</h1>
       </div>
     </div>
 
     <div class="container" style="padding: 40px 0;">
-      <form class="contact-form">
-        <input type="text" placeholder="Your name" required />
-        <input type="email" placeholder="Your email" required />
-        <textarea placeholder="Tell us about your project" required></textarea>
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <input type="text" placeholder="Your Full Name" required />
+        <input type="email" placeholder="Your Email Address" required />
+        <input type="text" placeholder="Subject" required />
+        <textarea placeholder="Tell us about your project or inquiry..."></textarea>
         <button type="submit" class="btn-primary">Send Message</button>
       </form>
     </div>
@@ -979,40 +1295,53 @@
 
   <footer>
     <div class="container footer-row">
-      <div class="logo" style="margin: 0;">
+      <a class="logo" onclick="showPage('home')" style="cursor: pointer;">
         <div class="logo-mark">A</div>
         <span>ARRAY</span>
-      </div>
+      </a>
 
       <ul class="footer-links">
         <li><a onclick="showPage('features')">Features</a></li>
         <li><a onclick="showPage('labs')">Labs</a></li>
         <li><a onclick="showPage('pricing')">Pricing</a></li>
+        <li><a onclick="showPage('about')">About</a></li>
         <li><a onclick="showPage('contact')">Contact</a></li>
       </ul>
 
-      <p>© 2026 Array AI</p>
+      <p>© 2026 Array AI | All Rights Reserved</p>
     </div>
   </footer>
 
   <script>
     function showPage(pageId) {
-      // Hide all pages
+      // Hide all pages with smooth transition
       document.querySelectorAll('.page').forEach(page => {
         page.classList.remove('active');
       });
 
       // Show selected page
-      document.getElementById(pageId).classList.add('active');
+      const selectedPage = document.getElementById(pageId);
+      if (selectedPage) {
+        selectedPage.classList.add('active');
+      }
 
-      // Update nav links
+      // Update nav active state
       document.querySelectorAll('.nav-links a').forEach(link => {
         link.classList.remove('active');
       });
-      document.getElementById('nav-' + pageId).classList.add('active');
+      const navLink = document.getElementById('nav-' + pageId);
+      if (navLink) {
+        navLink.classList.add('active');
+      }
 
-      // Scroll to top
-      window.scrollTo(0, 0);
+      // Scroll to top smoothly
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function handleSubmit(event) {
+      event.preventDefault();
+      alert('Thank you for reaching out! We will get back to you soon.');
+      event.target.reset();
     }
   </script>
 </body>
