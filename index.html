@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Array - Advanced AI Intelligence System</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%238b5cf6' width='100' height='100' rx='20'/%3E%3Ctext x='50' y='65' font-size='60' font-weight='bold' text-anchor='middle' fill='white'%3EA%3C/text%3E%3C/svg%3E" />
+  <title>Array - Free AI Intelligence Platform</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23ff9933;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%238b5cf6;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23grad)' width='100' height='100' rx='20'/%3E%3Ctext x='50' y='70' font-size='50' font-weight='bold' text-anchor='middle' fill='white' font-family='serif'%3E%E0%A5%A4%3C/text%3E%3C/svg%3E" />
   <style>
     * {
       margin: 0;
@@ -113,17 +113,41 @@
       text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
     }
 
+    /* Damru Logo Animation */
     .logo-mark {
       display: grid;
       place-items: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
       background: linear-gradient(135deg, var(--saffron), var(--purple-accent));
       color: white;
       box-shadow: 0 0 30px rgba(255, 153, 51, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.2);
       font-weight: 900;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
+      font-family: serif;
+      animation: damruSpin 3s ease-in-out infinite;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-mark::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.2), transparent);
+      animation: shimmer 2s ease-in-out infinite;
+    }
+
+    @keyframes damruSpin {
+      0%, 100% { transform: rotateY(0deg) rotateX(0deg); }
+      50% { transform: rotateY(20deg) rotateX(-10deg); }
+    }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
     }
 
     .nav-links {
@@ -227,6 +251,20 @@
       width: 100%;
     }
 
+    .free-badge {
+      display: inline-block;
+      padding: 8px 16px;
+      background: linear-gradient(135deg, var(--saffron), var(--green));
+      color: white;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-left: 10px;
+      box-shadow: 0 0 15px rgba(255, 153, 51, 0.4);
+    }
+
     /* Hero Section */
     .hero {
       padding: 100px 0 60px;
@@ -244,10 +282,11 @@
       background: radial-gradient(circle, rgba(255, 153, 51, 0.15) 0%, transparent 70%);
       border-radius: 50%;
       filter: blur(40px);
+      animation: float 8s ease-in-out infinite;
     }
 
     .hero::after {
-      content: '🕉️';
+      content: '🧠';
       position: absolute;
       top: 10%;
       right: 5%;
@@ -257,8 +296,8 @@
     }
 
     @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(5deg); }
     }
 
     .hero-grid {
@@ -403,6 +442,7 @@
       50% { transform: scale(1.1); opacity: 0.5; }
     }
 
+    /* ANIMATED DASHBOARD */
     .dashboard-card {
       position: relative;
       width: min(100%, 540px);
@@ -426,11 +466,17 @@
       height: 14px;
       border-radius: 50%;
       box-shadow: 0 0 8px currentColor;
+      animation: blink 2s ease-in-out infinite;
     }
 
-    .dot-red { background: #ff6b6b; }
-    .dot-yellow { background: #ffd93d; }
-    .dot-green { background: #6bcf7f; }
+    .dot-red { background: #ff6b6b; animation-delay: 0s; }
+    .dot-yellow { background: #ffd93d; animation-delay: 0.2s; }
+    .dot-green { background: #6bcf7f; animation-delay: 0.4s; }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
 
     .dashboard-panel {
       background: rgba(255, 153, 51, 0.05);
@@ -462,6 +508,12 @@
       font-size: 0.7rem;
       font-weight: 700;
       border: 1px solid var(--green);
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 8px rgba(52, 211, 153, 0.3); }
+      50% { box-shadow: 0 0 15px rgba(52, 211, 153, 0.6); }
     }
 
     .chips {
@@ -479,6 +531,18 @@
       color: var(--saffron);
       font-size: 0.78rem;
       font-weight: 600;
+      animation: slideIn 0.5s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
     }
 
     .metric-grid {
@@ -493,6 +557,30 @@
       border: 1px solid var(--border);
       border-radius: 10px;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .metric-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 153, 51, 0.3), transparent);
+      animation: shimmerBar 2s ease-in-out infinite;
+    }
+
+    @keyframes shimmerBar {
+      0% { left: -100%; }
+      100% { left: 100%; }
     }
 
     .metric-box small {
@@ -501,11 +589,21 @@
       margin-bottom: 8px;
       font-size: 0.75rem;
       font-weight: 600;
+      position: relative;
+      z-index: 1;
     }
 
     .metric-box strong {
       font-size: 1.6rem;
       color: var(--text-light);
+      position: relative;
+      z-index: 1;
+      animation: countUp 1s ease-out;
+    }
+
+    @keyframes countUp {
+      from { transform: translateY(10px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
 
     .section {
@@ -558,8 +656,7 @@
     }
 
     .feature-card,
-    .lab-card,
-    .pricing-card {
+    .lab-card {
       background: rgba(15, 12, 35, 0.88);
       border: 2px solid var(--border);
       border-radius: 14px;
@@ -570,7 +667,8 @@
       overflow: hidden;
     }
 
-    .feature-card::before {
+    .feature-card::before,
+    .lab-card::before {
       content: '';
       position: absolute;
       top: -50%;
@@ -582,8 +680,7 @@
     }
 
     .feature-card:hover,
-    .lab-card:hover,
-    .pricing-card:hover {
+    .lab-card:hover {
       border-color: var(--saffron);
       background: rgba(15, 12, 35, 0.95);
       transform: translateY(-8px);
@@ -594,11 +691,16 @@
       font-size: 3rem;
       margin-bottom: 16px;
       display: block;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
 
     .feature-card h3,
-    .lab-card h3,
-    .pricing-card h3 {
+    .lab-card h3 {
       margin: 0 0 12px;
       font-size: 1.4rem;
       color: var(--text-light);
@@ -647,77 +749,6 @@
       color: var(--saffron);
       font-weight: bold;
       font-size: 1.1rem;
-    }
-
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 24px;
-    }
-
-    .pricing-card {
-      position: relative;
-    }
-
-    .pricing-card.featured {
-      border-color: var(--saffron);
-      transform: scale(1.05);
-    }
-
-    .pricing-card.featured:hover {
-      transform: scale(1.05) translateY(-8px);
-    }
-
-    .badge {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: linear-gradient(135deg, var(--saffron), var(--purple-accent));
-      padding: 8px 12px;
-      border-radius: 20px;
-      color: white;
-      font-size: 0.65rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      box-shadow: 0 0 15px rgba(255, 153, 51, 0.4);
-    }
-
-    .price {
-      font-size: 2.5rem;
-      font-weight: 900;
-      letter-spacing: -0.08em;
-      margin: 20px 0;
-      color: var(--text-light);
-      position: relative;
-      z-index: 1;
-    }
-
-    .price span {
-      font-size: 1rem;
-      color: var(--muted);
-    }
-
-    .pricing-card ul {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 24px;
-      line-height: 2.2;
-      position: relative;
-      z-index: 1;
-    }
-
-    .pricing-card li {
-      color: var(--text);
-      padding-left: 22px;
-      position: relative;
-    }
-
-    .pricing-card li::before {
-      content: '✓';
-      position: absolute;
-      left: 0;
-      color: var(--saffron);
-      font-weight: bold;
     }
 
     .page-header {
@@ -824,6 +855,7 @@
       color: var(--text-light);
       position: relative;
       z-index: 1;
+      animation: countUp 1s ease-out;
     }
 
     .story-block {
@@ -889,7 +921,6 @@
       .hero-grid,
       .feature-grid,
       .lab-grid,
-      .pricing-grid,
       .dashboard-grid {
         grid-template-columns: 1fr;
       }
@@ -901,14 +932,6 @@
 
       .stats-grid {
         grid-template-columns: 1fr;
-      }
-
-      .pricing-card.featured {
-        transform: scale(1);
-      }
-
-      .pricing-card.featured:hover {
-        transform: translateY(-8px);
       }
     }
 
@@ -938,6 +961,12 @@
       .nav-actions {
         gap: 10px;
       }
+
+      .free-badge {
+        margin-left: 0;
+        margin-top: 10px;
+        display: block;
+      }
     }
   </style>
 </head>
@@ -946,23 +975,21 @@
     <div class="container">
       <nav>
         <a class="logo" onclick="showPage('home')">
-          <div class="logo-mark">A</div>
-          <span>ARRAY</span>
+          <div class="logo-mark">ठ</div>
+          <span>ARRAY<span class="free-badge">100% FREE</span></span>
         </a>
 
         <ul class="nav-links">
           <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
           <li><a onclick="showPage('features')" id="nav-features">Features</a></li>
           <li><a onclick="showPage('labs')" id="nav-labs">Labs</a></li>
-          <li><a onclick="showPage('pricing')" id="nav-pricing">Pricing</a></li>
           <li><a onclick="showPage('dashboard')" id="nav-dashboard">Dashboard</a></li>
           <li><a onclick="showPage('about')" id="nav-about">About</a></li>
           <li><a onclick="showPage('contact')" id="nav-contact">Contact</a></li>
         </ul>
 
         <div class="nav-actions">
-          <button class="btn-ghost">Sign in</button>
-          <button class="btn-primary">Try Array</button>
+          <button class="btn-primary">Access Free</button>
         </div>
       </nav>
     </div>
@@ -973,21 +1000,21 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <span class="eyebrow">AI Intelligence Platform</span>
-          <h1>Transform Knowledge Into <span>Power</span> with Array</h1>
+          <span class="eyebrow">Free AI Intelligence Platform</span>
+          <h1>Unleash The Power Of <span>Array</span> - 100% Free</h1>
           <p>
-            Array is an advanced AI intelligence system combining voice AI, deep research, image search, science discovery, stock market understanding, and music creation into one unified platform inspired by Indian wisdom and modern innovation.
+            Array is a completely free advanced AI intelligence system combining voice AI, deep research, image understanding, science discovery, stock market analysis, and music creation - with no premium tiers, no subscriptions, just pure AI power for everyone.
           </p>
 
           <div class="hero-actions">
-            <button class="btn-primary btn-large">Start Your Journey</button>
-            <button class="btn-secondary btn-large">View Demo</button>
+            <button class="btn-primary btn-large">Start For Free</button>
+            <button class="btn-secondary btn-large">View Live Demo</button>
           </div>
 
           <div class="stats-grid">
-            <div class="stat-card"><strong>4</strong><span>Specialized Labs</span></div>
-            <div class="stat-card"><strong>24/7</strong><span>AI Assistance</span></div>
-            <div class="stat-card"><strong>∞</strong><span>Knowledge Access</span></div>
+            <div class="stat-card"><strong>4</strong><span>AI Labs</span></div>
+            <div class="stat-card"><strong>100%</strong><span>Free Forever</span></div>
+            <div class="stat-card"><strong>∞</strong><span>No Limits</span></div>
           </div>
         </div>
 
@@ -995,6 +1022,7 @@
           <div class="orb orb-1"></div>
           <div class="orb orb-2"></div>
 
+          <!-- ANIMATED DASHBOARD -->
           <div class="dashboard-card">
             <div class="window-bar">
               <div class="dot dot-red"></div>
@@ -1005,20 +1033,20 @@
             <div class="dashboard-panel">
               <div class="panel-head">
                 <p>Array Intelligence</p>
-                <span>ACTIVE</span>
+                <span>LIVE</span>
               </div>
 
               <div class="chips">
-                <span class="chip">Voice Processing</span>
-                <span class="chip">Image Analysis</span>
-                <span class="chip">Deep Learning</span>
+                <span class="chip">🎤 Voice</span>
+                <span class="chip">🖼️ Vision</span>
+                <span class="chip">🧠 Learning</span>
               </div>
 
               <div class="metric-grid">
-                <div class="metric-box"><small>Science Insights</small><strong>942</strong></div>
-                <div class="metric-box"><small>Market Analysis</small><strong>+6.3%</strong></div>
-                <div class="metric-box"><small>Completed Research</small><strong>187</strong></div>
-                <div class="metric-box"><small>Created Compositions</small><strong>52</strong></div>
+                <div class="metric-box"><small>Science Queries</small><strong id="sci-count">0</strong></div>
+                <div class="metric-box"><small>Market Updates</small><strong>+6.2%</strong></div>
+                <div class="metric-box"><small>Research Papers</small><strong id="res-count">0</strong></div>
+                <div class="metric-box"><small>Songs Created</small><strong id="music-count">0</strong></div>
               </div>
             </div>
           </div>
@@ -1031,26 +1059,26 @@
         <div class="section-head">
           <div>
             <span class="eyebrow">Capabilities</span>
-            <h2>Everything You Need For Advanced Intelligence</h2>
+            <h2>Everything You Need - Absolutely Free</h2>
           </div>
-          <p>Built for research, analysis, creativity, and decision-making with cutting-edge AI technology.</p>
+          <p>Built for research, analysis, creativity, and decision-making with zero cost, zero subscriptions, zero limits.</p>
         </div>
 
         <div class="feature-grid">
           <div class="feature-card">
-            <span class="feature-icon">🎙️</span>
+            <span class="feature-icon">🎤</span>
             <h3>Voice AI</h3>
-            <p>Interact naturally with advanced voice processing for seamless communication and instant insights.</p>
+            <p>Talk naturally with advanced voice processing for seamless communication.</p>
           </div>
           <div class="feature-card">
             <span class="feature-icon">🖼️</span>
             <h3>Image Understanding</h3>
-            <p>Analyze visual content with AI-powered vision to identify patterns and extract meaningful data.</p>
+            <p>Analyze visual content with AI-powered vision to extract insights.</p>
           </div>
           <div class="feature-card">
             <span class="feature-icon">🔬</span>
             <h3>Deep Research</h3>
-            <p>Synthesize complex information into actionable knowledge with structured analysis and insights.</p>
+            <p>Synthesize complex information into actionable knowledge.</p>
           </div>
         </div>
       </div>
@@ -1062,41 +1090,41 @@
     <div class="page-header">
       <div class="container">
         <span class="eyebrow">Capabilities</span>
-        <h1>Advanced AI Features For Modern Challenges</h1>
+        <h1>Advanced AI Features - All Free</h1>
       </div>
     </div>
 
     <div class="container" style="padding: 40px 0;">
       <div class="feature-grid">
         <div class="feature-card">
-          <span class="feature-icon">🎙️</span>
+          <span class="feature-icon">🎤</span>
           <h3>Voice Intelligence</h3>
-          <p>Natural language processing with context awareness for fluid voice interactions and immediate responses.</p>
+          <p>Natural language processing with context awareness for fluid interactions.</p>
         </div>
         <div class="feature-card">
           <span class="feature-icon">🖼️</span>
           <h3>Visual Analysis</h3>
-          <p>Computer vision technology to understand images, identify objects, and extract visual intelligence.</p>
+          <p>Computer vision technology to understand images and extract intelligence.</p>
         </div>
         <div class="feature-card">
           <span class="feature-icon">📚</span>
           <h3>Knowledge Synthesis</h3>
-          <p>Transform raw information into structured knowledge with advanced summarization and analysis.</p>
+          <p>Transform raw information into structured knowledge automatically.</p>
         </div>
         <div class="feature-card">
           <span class="feature-icon">🔍</span>
           <h3>Deep Research Engine</h3>
-          <p>Access comprehensive research capabilities across multiple domains and knowledge bases.</p>
+          <p>Access comprehensive research across multiple domains instantly.</p>
         </div>
         <div class="feature-card">
           <span class="feature-icon">⚡</span>
           <h3>Real-Time Processing</h3>
-          <p>Instant computation and analysis with high-speed data processing and immediate results.</p>
+          <p>Instant computation and analysis with high-speed results.</p>
         </div>
         <div class="feature-card">
-          <span class="feature-icon">🎯</span>
+          <span class="feature-icon">🧠</span>
           <h3>Intelligent Predictions</h3>
-          <p>Advanced machine learning for accurate forecasting and intelligent decision support systems.</p>
+          <p>Advanced machine learning for accurate forecasting.</p>
         </div>
       </div>
     </div>
@@ -1115,7 +1143,7 @@
       <div class="lab-grid">
         <div class="lab-card">
           <h3>🧪 Science Lab</h3>
-          <p>Explore scientific topics with deep explanations, research summaries, and breakthrough insights across all scientific disciplines.</p>
+          <p>Explore scientific topics with deep explanations and research summaries.</p>
           <ul>
             <li>Scientific Research Queries</li>
             <li>Concept Simplification</li>
@@ -1125,7 +1153,7 @@
         </div>
         <div class="lab-card">
           <h3>📈 Stock Lab</h3>
-          <p>Monitor global markets with country-specific analysis, trend tracking, and intelligent market overview reports.</p>
+          <p>Monitor global markets with country-specific analysis and trends.</p>
           <ul>
             <li>Real-time Market Tracking</li>
             <li>Country-Level Analysis</li>
@@ -1135,7 +1163,7 @@
         </div>
         <div class="lab-card">
           <h3>📖 Research Lab</h3>
-          <p>Summarize academic papers, extract key findings, and organize research into actionable briefs and insights.</p>
+          <p>Summarize academic papers and extract key findings instantly.</p>
           <ul>
             <li>Paper Summarization</li>
             <li>Key Finding Extraction</li>
@@ -1145,7 +1173,7 @@
         </div>
         <div class="lab-card">
           <h3>🎵 Music Lab</h3>
-          <p>Generate creative song concepts, musical ideas, and compositions with mood-based guidance and artistic direction.</p>
+          <p>Generate creative song concepts with mood-based guidance.</p>
           <ul>
             <li>Lyric Generation</li>
             <li>Melody Suggestions</li>
@@ -1157,93 +1185,40 @@
     </div>
   </div>
 
-  <!-- PRICING PAGE -->
-  <div id="pricing" class="page">
-    <div class="page-header">
-      <div class="container">
-        <span class="eyebrow">Plans</span>
-        <h1>Choose Your Path to Intelligence</h1>
-      </div>
-    </div>
-
-    <div class="container" style="padding: 40px 0;">
-      <div class="pricing-grid">
-        <div class="pricing-card">
-          <h3>Explorer</h3>
-          <div class="price">$29<span>/month</span></div>
-          <ul>
-            <li>Basic AI Chat</li>
-            <li>Science Lab Access</li>
-            <li>Voice Assistant</li>
-            <li>100 Monthly Queries</li>
-          </ul>
-          <button class="btn-secondary btn-full">Get Started</button>
-        </div>
-
-        <div class="pricing-card featured">
-          <span class="badge">Most Popular</span>
-          <h3>Professional</h3>
-          <div class="price">$79<span>/month</span></div>
-          <ul>
-            <li>All Explorer Features</li>
-            <li>All 4 Labs Access</li>
-            <li>Deep Research Engine</li>
-            <li>Unlimited Queries</li>
-            <li>Priority Support</li>
-          </ul>
-          <button class="btn-primary btn-full">Start Now</button>
-        </div>
-
-        <div class="pricing-card">
-          <h3>Enterprise</h3>
-          <div class="price">Custom<span>/month</span></div>
-          <ul>
-            <li>Custom Workflows</li>
-            <li>Private Deployment</li>
-            <li>Team Collaboration</li>
-            <li>24/7 Support</li>
-            <li>API Access</li>
-          </ul>
-          <button class="btn-secondary btn-full">Contact Sales</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- DASHBOARD PAGE -->
   <div id="dashboard" class="page">
     <div class="page-header">
       <div class="container">
         <span class="eyebrow">Control Center</span>
-        <h1>Your AI Intelligence Dashboard</h1>
+        <h1>Your Live AI Dashboard</h1>
       </div>
     </div>
 
     <div class="container" style="padding: 40px 0;">
       <div class="dashboard-grid">
         <div class="dashboard-item">
-          <small>🎙️ Voice Processing Status</small>
+          <small>🎤 Voice Processing</small>
           <strong>ACTIVE</strong>
         </div>
         <div class="dashboard-item">
           <small>🔬 Science Lab Queries</small>
-          <strong>142 Tasks</strong>
+          <strong id="dash-sci">142</strong>
         </div>
         <div class="dashboard-item">
           <small>📈 Market Analysis</small>
-          <strong>+4.8%</strong>
+          <strong>+6.2%</strong>
         </div>
         <div class="dashboard-item">
           <small>🎵 Music Compositions</small>
-          <strong>28 Created</strong>
+          <strong id="dash-music">28</strong>
         </div>
         <div class="dashboard-item">
-          <small>📚 Research Completed</small>
-          <strong>89 Papers</strong>
+          <small>📚 Research Papers</small>
+          <strong id="dash-research">89</strong>
         </div>
         <div class="dashboard-item">
           <small>🖼️ Images Analyzed</small>
-          <strong>256 Images</strong>
+          <strong id="dash-images">256</strong>
         </div>
       </div>
     </div>
@@ -1254,20 +1229,23 @@
     <div class="page-header">
       <div class="container">
         <span class="eyebrow">Our Mission</span>
-        <h1>Building Intelligence For Humanity</h1>
+        <h1>Free AI Intelligence For Everyone</h1>
       </div>
     </div>
 
     <div class="container" style="padding: 40px 0; max-width: 900px;">
       <div class="story-block">
         <p>
-          Array was born from a vision to unite the power of artificial intelligence with the wisdom of human knowledge. Inspired by Indian philosophy of interconnectedness and modern innovation, we created a platform that brings together multiple AI capabilities into one harmonious system.
+          Array was created with a simple vision: AI should be free. No paywalls, no premium tiers, no hidden costs. Just pure, powerful artificial intelligence accessible to everyone.
         </p>
         <p>
-          Our mission is to democratize advanced AI technology, making powerful research, analysis, creativity, and insight accessible to everyone. Whether you're exploring science, tracking markets, conducting research, or creating art, Array empowers you with intelligent tools.
+          Inspired by Indian philosophy of knowledge sharing and modern innovation, we built Array to bring together voice AI, visual understanding, deep research, scientific discovery, market analysis, and creative music generation into one free platform.
         </p>
         <p>
-          Built on principles of transparency, reliability, and user-centric design, Array represents the next generation of AI platforms—one that respects your intelligence and enhances your capabilities.
+          Our mission is to democratize advanced AI technology. Whether you're exploring science, tracking markets, conducting research, or creating art, Array empowers you with intelligent tools - completely free.
+        </p>
+        <p>
+          No subscriptions. No premium features. No limits. Just unlimited access to cutting-edge AI for humanity.
         </p>
       </div>
     </div>
@@ -1296,36 +1274,64 @@
   <footer>
     <div class="container footer-row">
       <a class="logo" onclick="showPage('home')" style="cursor: pointer;">
-        <div class="logo-mark">A</div>
-        <span>ARRAY</span>
+        <div class="logo-mark">ठ</div>
+        <span>ARRAY - 100% FREE</span>
       </a>
 
       <ul class="footer-links">
         <li><a onclick="showPage('features')">Features</a></li>
         <li><a onclick="showPage('labs')">Labs</a></li>
-        <li><a onclick="showPage('pricing')">Pricing</a></li>
+        <li><a onclick="showPage('dashboard')">Dashboard</a></li>
         <li><a onclick="showPage('about')">About</a></li>
         <li><a onclick="showPage('contact')">Contact</a></li>
       </ul>
 
-      <p>© 2026 Array AI | All Rights Reserved</p>
+      <p>© 2026 Array AI | Free Forever | No Limitations</p>
     </div>
   </footer>
 
   <script>
+    // Animated Counter for Dashboard
+    function animateCounter(elementId, start, end, duration) {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+
+      const range = end - start;
+      const increment = end > start ? 1 : -1;
+      const stepTime = Math.abs(Math.floor(duration / range));
+      let current = start;
+
+      const timer = setInterval(() => {
+        current += increment;
+        element.textContent = current;
+        if (current === end) {
+          clearInterval(timer);
+        }
+      }, stepTime);
+    }
+
+    // Start animations when page loads
+    window.addEventListener('load', () => {
+      animateCounter('sci-count', 0, 942, 1500);
+      animateCounter('res-count', 0, 187, 1800);
+      animateCounter('music-count', 0, 52, 1200);
+      animateCounter('dash-sci', 0, 142, 1500);
+      animateCounter('dash-music', 0, 28, 1200);
+      animateCounter('dash-research', 0, 89, 1500);
+      animateCounter('dash-images', 0, 256, 1800);
+    });
+
+    // Page Navigation
     function showPage(pageId) {
-      // Hide all pages with smooth transition
       document.querySelectorAll('.page').forEach(page => {
         page.classList.remove('active');
       });
 
-      // Show selected page
       const selectedPage = document.getElementById(pageId);
       if (selectedPage) {
         selectedPage.classList.add('active');
       }
 
-      // Update nav active state
       document.querySelectorAll('.nav-links a').forEach(link => {
         link.classList.remove('active');
       });
@@ -1334,13 +1340,13 @@
         navLink.classList.add('active');
       }
 
-      // Scroll to top smoothly
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    // Contact Form
     function handleSubmit(event) {
       event.preventDefault();
-      alert('Thank you for reaching out! We will get back to you soon.');
+      alert('Thank you! Your message has been sent. We will get back to you soon.');
       event.target.reset();
     }
   </script>
