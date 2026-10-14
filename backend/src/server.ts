@@ -1,6 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import { aiArray } from './data/aiArray.js';
 
 dotenv.config();
@@ -8,6 +13,74 @@ dotenv.config();
 const app = express();
 const port = Number(process.env.PORT || 4000);
 const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:5173';
+const jwtSecret = process.env.JWT_SECRET || 'damru-ai-secret';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const usersPath = path.join(__dirname, 'data', 'users.json');
+
+const ensureUsersFile = () => {
+  if (!fs.existsSync(usersPath)) {
+    fs.writeFileSync(usersPath, '[]', 'utf8');
+  }
+};
+
+type UserRecord = {
+  id: string;
+  name: string;
+  email: string;
+  passwordHash: string;
+  createdAt: string;
+};
+
+type AuthenticatedRequest = express.Request & {
+  user?: {
+    id: string;
+    email: string;
+    name: string;
+  };
+};
+
+const readUsers = (): UserRecord[] => {
+  ensureUsersFile();
+  const raw = fs.readFileSync(usersPath, 'utf8');
+  if (!raw.trim()) return [];
+  try {
+    return JSON.parse(raw) as UserRecord[];
+  } catch {
+    return [];
+  }
+};
+
+const writeUsers = (users: UserRecord[]) => {
+  fs.writeFileSync(usersPath, JSON.stringify(users, null, 2), 'utf8');
+};
+
+const signToken = (user: Pick<UserRecord, 'id' | 'email' | 'name'>) =>
+  jwt.sign({ id: user.id, email: user.email, name: user.name }, jwtSecret, {
+    expiresIn: '7d',
+  });
+
+const authMiddleware = (req: AuthenticatedRequest, res: express.Response, next: express.NextFunction) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ error: 'Authentication required.' });
+  }
+
+  const token = authHeader.replace('Bearer ', '');
+
+  try {
+    const payload = jwt.verify(token, jwtSecret) as {
+      id: string;
+      email: string;
+      name: string;
+    };
+    req.user = payload;
+    return next();
+  } catch {
+    return res.status(401).json({ error: 'Invalid or expired token.' });
+  }
+};
 
 app.use(
   cors({
@@ -36,13 +109,105 @@ app.get('/api/health', (_req, res) => {
   res.json({
     status: 'ok',
     service: 'AI Array System',
-    version: '1.0.0',
+    version: '1.1.0',
     labs: aiArray.chatbot.labOptions.map((lab) => lab.name),
   });
 });
 
 app.get('/api/array', (_req, res) => {
   res.json(aiArray);
+});
+
+app.post('/api/auth/register', async (req, res) => {
+  const { name, email, password } = req.body as {
+    name?: string;
+    email?: string;
+    password?: string;
+  };
+
+  if (!name || !email || !password) {
+    return res.status(400).json({ error: 'Name, email, and password are required.' });
+  }
+
+  if (typeof name !== 'string' || typeof email !== 'string' || typeof password !== 'string') {
+    return res.status(400).json({ error: 'Invalid registration payload.' });
+  }
+
+  if (password.length < 6) {
+    return res.status(400).json({ error: 'Password must be at least 6 characters long.' });
+  }
+
+  const users = readUsers();
+  const normalizedEmail = email.trim().toLowerCase();
+  const existing = users.find((user) => user.email === normalizedEmail);
+
+  if (existing) {
+    return res.status(409).json({ error: 'User already exists.' });
+  }
+
+  const passwordHash = await bcrypt.hash(password, 10);
+  const newUser: UserRecord = {
+    id: crypto.randomUUID(),
+    name: name.trim(),
+    email: normalizedEmail,
+    passwordHash,
+    createdAt: new Date().toISOString(),
+  };
+
+  users.push(newUser);
+  writeUsers(users);
+
+  const token = signToken({ id: newUser.id, email: newUser.email, name: newUser.name });
+
+  return res.status(201).json({
+    token,
+    user: { id: newUser.id, name: newUser.name, email: newUser.email },
+  });
+});
+
+app.post('/api/auth/login', async (req, res) => {
+  const { email, password } = req.body as { email?: string; password?: string };
+
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Email and password are required.' });
+  }
+
+  const users = readUsers();
+  const normalizedEmail = email.trim().toLowerCase();
+  const user = users.find((entry) => entry.email === normalizedEmail);
+
+  if (!user) {
+    return res.status(401).json({ error: 'Invalid email or password.' });
+  }
+
+  const isValid = await bcrypt.compare(password, user.passwordHash);
+  if (!isValid) {
+    return res.status(401).json({ error: 'Invalid email or password.' });
+  }
+
+  const token = signToken({ id: user.id, email: user.email, name: user.name });
+
+  return res.json({
+    token,
+    user: { id: user.id, name: user.name, email: user.email },
+  });
+});
+
+app.get('/api/auth/me', authMiddleware, (req: AuthenticatedRequest, res) => {
+  const users = readUsers();
+  const user = users.find((entry) => entry.id === req.user?.id);
+
+  if (!user) {
+    return res.status(404).json({ error: 'User not found.' });
+  }
+
+  return res.json({
+    user: {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    },
+  });
 });
 
 app.post('/api/chat', (req, res) => {
@@ -53,7 +218,6 @@ app.post('/api/chat', (req, res) => {
   }
 
   const intent = detectIntent(message);
-
   const map: Record<string, string> = {
     general: `I can help you with your AI workflow. Ask me about research, science, stocks, music, or image search.`,
     research: `I can analyze the topic, summarize the most relevant findings, and structure a research brief for you.`,
@@ -145,3 +309,5 @@ app.use((_req, res) => {
 app.listen(port, () => {
   console.log(`AI Array backend running on http://localhost:${port}`);
 });
+
+export { app, createResponse };

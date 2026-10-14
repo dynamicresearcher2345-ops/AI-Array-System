@@ -1,0 +1,27 @@
+<svg width="220" height="220" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ring" x1="30" y1="20" x2="190" y2="200" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFB347"/>
+      <stop offset="0.5" stop-color="#FF9933"/>
+      <stop offset="1" stop-color="#138808"/>
+    </linearGradient>
+    <linearGradient id="core" x1="60" y1="30" x2="160" y2="170" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF7E6"/>
+      <stop offset="1" stop-color="#FFE0A3"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="110" cy="110" r="100" fill="#0C0C0E" stroke="url(#ring)" stroke-width="6"/>
+  <circle cx="110" cy="110" r="76" fill="#111827" stroke="#FF9933" stroke-width="2" opacity="0.8"/>
+  <path d="M110 49C83.4903 49 62 70.4903 62 97V106C62 132.51 83.4903 154 110 154C136.51 154 158 132.51 158 106V97C158 70.4903 136.51 49 110 49Z" fill="url(#core)" opacity="0.95"/>
+  <path d="M110 61C90.1177 61 74 77.1177 74 97V108C74 127.882 90.1177 144 110 144C129.883 144 146 127.882 146 108V97C146 77.1177 129.883 61 110 61Z" fill="#121212"/>
+
+  <path d="M89 82C89 73.1634 96.1634 66 105 66H110C118.837 66 126 73.1634 126 82V86C126 94.8366 118.837 102 110 102H105C96.1634 102 89 94.8366 89 86V82Z" fill="#FF9933"/>
+  <path d="M89 107H131V119C131 127.837 123.837 135 115 135H105C96.1634 135 89 127.837 89 119V107Z" fill="#138808"/>
+  <circle cx="110" cy="88" r="8" fill="#F7F3E8"/>
+
+  <path d="M74 146C83 153.5 93.5 158 110 158C126.5 158 137 153.5 146 146" stroke="#F5D58C" stroke-width="4" stroke-linecap="round"/>
+  <path d="M70 170C84.6667 163.333 98.1667 160 110.5 160C122.833 160 136.333 163.333 151 170" stroke="#F5D58C" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+
+  <text x="110" y="190" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="3" fill="#F5F1E8">DAMRU</text>
+</svg>

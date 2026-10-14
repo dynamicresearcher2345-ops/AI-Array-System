@@ -1,0 +1,38 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B0B0D"/>
+      <stop offset="0.5" stop-color="#111827"/>
+      <stop offset="1" stop-color="#09090A"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(770 420) rotate(90) scale(420 580)">
+      <stop stop-color="#FFB347" stop-opacity="0.35"/>
+      <stop offset="0.55" stop-color="#FF9933" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#0B0B0D" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ring" x1="390" y1="220" x2="1180" y2="700" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFB347"/>
+      <stop offset="0.5" stop-color="#FF9933"/>
+      <stop offset="1" stop-color="#138808"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg1)"/>
+  <rect width="1600" height="900" fill="url(#glow)"/>
+
+  <g opacity="0.25">
+    <circle cx="420" cy="260" r="180" stroke="#FF9933" stroke-width="3"/>
+    <circle cx="1180" cy="620" r="220" stroke="#FF9933" stroke-width="3"/>
+    <circle cx="820" cy="440" r="320" stroke="#D4AF37" stroke-width="2"/>
+  </g>
+
+  <circle cx="800" cy="450" r="220" fill="none" stroke="url(#ring)" stroke-width="10"/>
+  <circle cx="800" cy="450" r="150" fill="#0F172A" stroke="#FF9933" stroke-width="3"/>
+  <path d="M800 295C740 295 696 340 696 399V426C696 483 740 528 800 528C860 528 904 483 904 426V399C904 340 860 295 800 295Z" fill="#FFF0CD"/>
+  <path d="M708 552H892V605C892 685 841 742 800 742C759 742 708 685 708 605V552Z" fill="#0E7A29"/>
+  <circle cx="800" cy="410" r="20" fill="#1F2937"/>
+  <path d="M726 612C760 640 780 650 800 650C820 650 840 640 874 612" stroke="#F9C74F" stroke-width="11" stroke-linecap="round"/>
+  <path d="M680 735C719 708 758 694 800 694C842 694 881 708 920 735" stroke="#F9C74F" stroke-width="10" stroke-linecap="round" opacity="0.8"/>
+
+  <text x="800" y="820" text-anchor="middle" fill="#F7F2E7" font-family="Segoe UI, Arial, sans-serif" font-size="74" font-weight="700" letter-spacing="10">DAMRU</text>
+</svg>
