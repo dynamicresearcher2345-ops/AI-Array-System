@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM node:20-Alpine AS frontend-build
+FROM node:20-alpine AS frontend-build
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
 RUN npm install
