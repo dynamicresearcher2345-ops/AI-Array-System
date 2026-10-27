@@ -16,6 +16,8 @@ RUN npm run build
 
 FROM nginx:alpine
 
+RUN apk add --no-cache nodejs npm
+
 WORKDIR /app
 
 COPY --from=frontend-build /app/frontend/dist /usr/share/nginx/html
